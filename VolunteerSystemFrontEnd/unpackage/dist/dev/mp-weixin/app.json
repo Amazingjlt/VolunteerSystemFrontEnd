@@ -1,12 +1,14 @@
 {
   "pages": [
+    "pages/ApplicationCase/ApplicationCase",
     "pages/index/index"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "default",
+    "navigationBarTitleText": "中考志愿填报模拟系统",
+    "navigationBarBackgroundColor": "#00cd96",
+    "backgroundColor": "#FFFFFF"
   },
   "usingComponents": {}
 }
