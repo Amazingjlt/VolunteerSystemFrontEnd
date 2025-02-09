@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/ApplicationCase/ApplicationCase",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/login/login"
   ],
   "window": {
     "navigationBarTextStyle": "white",

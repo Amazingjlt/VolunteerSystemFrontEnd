@@ -9,7 +9,7 @@ export const getRecommendedSchools = async (success, fail) => {
       code: 200,
       msg: '',
       data: {
-        chong: ["学校A", "学校B"],
+        chong: ["深圳市罗湖外语学校", "学校B"],
         wen: ["学校C", "学校D"],
         bao: ["学校E", "学校F"]
       }

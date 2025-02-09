@@ -27,6 +27,13 @@
 			        "mpProgress": "node_modules/mp-progress/dist/component/mp-progress"
 			      }
 			
+		},
+		{
+			"path" : "pages/login/login",
+			"style" : 
+			{
+				"navigationBarTitleText" : "登录"
+			}
 		}
 	],
 
