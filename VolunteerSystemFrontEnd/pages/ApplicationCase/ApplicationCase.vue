@@ -35,7 +35,7 @@
       <view class="recommendation-category chong">
         <view class="recommendation-backchong">
           <view class="category-header">
-            <u-icon name="thumb-up" size="22" class="icon"></u-icon> <!-- 橘色图标 -->
+            <u-icon name="thumb-up-fill" size="40" class="icon" color="#ff8870"></u-icon> <!-- 橘色图标 -->
             <text class="category-title">推荐冲高校</text>
           </view>
           <text class="school-title">学校名称</text>
@@ -50,7 +50,14 @@
 
       <!-- 推荐持平校 -->
       <view class="recommendation-category wen">
-        <text class="category-title">推荐持平校</text>
+		  <view class="recommendation-backwen">
+            <view class="category-header">
+              <u-icon name="thumb-up-fill" size="40" class="icon" color="#00c591"></u-icon> <!-- 蓝色图标 -->
+              <text class="category-title">推荐持平校</text>
+            </view>
+		    <text class="school-title">学校名称</text>
+            <view class="divider"></view> <!-- 灰色分割线 -->
+		  </view>
         <view class="category-items">
           <view v-for="(school, index) in recommendedSchools.wen" :key="index" class="school-item">
             <text>{{ school }}</text>
@@ -60,7 +67,14 @@
 
       <!-- 推荐保底校 -->
       <view class="recommendation-category bao">
-        <text class="category-title">推荐保底校</text>
+        <view class="recommendation-backbao">
+            <view class="category-header">
+              <u-icon name="thumb-up-fill" size="40" class="icon" color="#70d7ff"></u-icon> <!-- 浅蓝色图标 -->
+              <text class="category-title">推荐保底校</text>
+            </view>
+            <text class="school-title">学校名称</text>
+            <view class="divider"></view> <!-- 灰色分割线 -->
+        </view>
         <view class="category-items">
           <view v-for="(school, index) in recommendedSchools.bao" :key="index" class="school-item">
             <text>{{ school }}</text>
@@ -76,7 +90,7 @@
 
 <script>
 import MpProgress from 'mp-progress';
-import uView from 'uview-ui';
+
 
 // 假设您已经在 application.js 中定义了 getRecommendedSchools API
 import { getRecommendedSchools } from '@/api/application.js';
@@ -287,8 +301,7 @@ export default {
 }
 
 .recommendation-title {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 22px;
   margin-bottom: 10px;
 }
 
@@ -298,12 +311,6 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 15px;
-}
-
-.category-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .category-items {
@@ -332,7 +339,7 @@ export default {
 /* 推荐冲高校部分 */
 .recommendation-category.chong {
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -341,7 +348,7 @@ export default {
 
 /* 上半部分背景渐变 */
 .recommendation-backchong {
-  background: linear-gradient(to bottom, #ffa68b, #ffffff);  /* 橘色渐变到白色 */
+  background: linear-gradient(to bottom, #ffcec4, #ffffff);  /* 橘色渐变到白色 */
   padding: 10px;
   border-radius: 10px 10px 0 0;  /* 仅上边添加圆角 */
 }
@@ -355,32 +362,30 @@ export default {
 
 /* 橘色图标 */
 .icon {
-  width: 20px;
-  height: 20px;
-  background-color: #ff6f3c;  /* 橘色 */
   border-radius: 50%;
   margin-right: 10px;
+
 }
 
-/* 推荐冲高校标题 */
+/* 推荐高校标题 */
 .category-title {
-  font-size: 20px;
-  font-weight: bold;
+  margin-top: 0px;
+  font-size: 22px;
   color: #000000;
 }
 
 /* 学校名称标题 */
 .school-title {
   font-size: 16px;
-  color: #333;
-  margin-top: 10px;
+  color: #757575;
+  margin-top: 5px;
 }
 
 /* 分割线 */
 .divider {
   height: 1px;
-  background-color: #ccc;
-  margin: 10px 0;
+  background-color: #e3e3e3;
+  margin: 10px 0 0 0;
 }
 
 /* 学校项容器 */
@@ -394,5 +399,37 @@ export default {
   font-size: 16px;
   color: #333;
 }
+/* 推荐持平校部分 */
+.recommendation-category.wen {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0;
+}
 
+/* 上半部分背景渐变 */
+.recommendation-backwen {
+  background: linear-gradient(to bottom, #6dddb8, #ffffff);  /* 蓝色渐变到白色 */
+  padding: 10px;
+  border-radius: 10px 10px 0 0;  /* 仅上边添加圆角 */
+}
+
+/* 推荐保底校部分 */
+.recommendation-category.bao {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0;
+}
+
+/* 上半部分背景渐变 */
+.recommendation-backbao {
+  background: linear-gradient(to bottom, #70d7ff, #ffffff);  /* 浅蓝色渐变到白色 */
+  padding: 10px;
+  border-radius: 10px 10px 0 0;  /* 仅上边添加圆角 */
+}
 </style>
