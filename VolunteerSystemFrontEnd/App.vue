@@ -12,6 +12,7 @@
 	}
 </script>
 
-<style>
-	/*每个页面公共css */
+
+<style lang="scss">/*配置uview-plus */
+  @import '@/node_modules/uview-plus/theme.scss';
 </style>

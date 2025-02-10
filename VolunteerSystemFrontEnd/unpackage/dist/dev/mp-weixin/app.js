@@ -2,7 +2,9 @@
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
 if (!Math) {
+  "./pages/ApplicationCase/ApplicationCase.js";
   "./pages/index/index.js";
+  "./pages/login/login.js";
 }
 const _sfc_main = {
   onLaunch: function() {
@@ -15,9 +17,10 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/ruanjiangongcheng/大二下暑假srp/VolunteerSystemFrontEnd/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/ruanjiangongcheng/大四/VolunteerSystemFrontEnd/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
+  app.use(common_vendor.uviewPlus);
   return {
     app
   };
