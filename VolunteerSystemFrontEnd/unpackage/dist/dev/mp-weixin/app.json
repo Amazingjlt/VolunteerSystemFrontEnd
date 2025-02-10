@@ -2,7 +2,9 @@
   "pages": [
     "pages/ApplicationCase/ApplicationCase",
     "pages/index/index",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/page1/page1",
+    "pages/page2/page2"
   ],
   "window": {
     "navigationBarTextStyle": "white",
