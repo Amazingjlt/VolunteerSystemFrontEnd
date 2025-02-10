@@ -5,6 +5,20 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+		{
+			"path" : "pages/information/page1/page1",
+			"style" : 
+			{
+				"navigationBarTitleText" : "志愿预测"
+			}
+		},
+		{
+			"path" : "pages/information/page2/page2",
+			"style" : 
+			{
+				"navigationBarTitleText" : "志愿预测"
+			}
 		}
 	],
 	"globalStyle": {
