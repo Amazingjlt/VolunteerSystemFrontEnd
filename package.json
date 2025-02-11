@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"mp-progress": "^1.2.14",
+		"uview-plus": "^3.3.67"
+	}
+}
