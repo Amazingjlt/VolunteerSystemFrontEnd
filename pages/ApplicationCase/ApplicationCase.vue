@@ -18,12 +18,14 @@
         <view class="divider"></view> <!-- 灰色分隔线 -->
         <view class="info-text">
           <view class="info-item">
-            <u-icon name="file-text" size="22" class="icon"></u-icon>
-            <text>中考成绩：{{ score }}分</text>
+            <u-icon name="file-text-fill" size="22" class="icon" color="#bbbbbb"></u-icon>
+            <text class="subtitle-text">中考成绩：</text>
+			<text class="subscore-text">{{ score }}分</text>
           </view>
           <view class="info-item">
-            <u-icon name="map" size="22" class="icon"></u-icon>
-            <text>所在地区：广东省/深圳市/宝安区</text>
+            <u-icon name="map-fill" size="22" class="icon" color="#bbbbbb" margin-top="5px"></u-icon>
+            <text class="subtitle-text">所在地区：</text>
+			<text class="subscore-text">{{ place }}</text>
           </view>
         </view>
       </view>
@@ -36,7 +38,7 @@
       <view class="recommendation-category chong">
         <view class="recommendation-backchong">
           <view class="category-header">
-            <u-icon name="thumb-up-fill" size="40" class="icon" color="#ff8870"></u-icon> <!-- 橘色图标 -->
+            <u-icon name="thumb-up-fill" size="40" class="icon" color="#ff8870" ></u-icon> <!-- 橘色图标 -->
             <text class="category-title">推荐冲高校</text>
           </view>
           <text class="school-title">学校名称</text>
@@ -100,6 +102,7 @@ export default {
   data() {
     return {
       score: 635.0,  // 用户分数
+	  place:"广东省/深圳市/宝安区",
       maxScore: 750, // 满分
       recommendedSchools: {
         chong: [],
@@ -117,13 +120,13 @@ export default {
         percentage: 100,
         // 进度条样式：底色和渐变色
         barStyle: [
-          { width: 24, fillStyle: '#f0f0f0' },  // 背景色
+          { width: 20, fillStyle: '#f0f0f0' },  // 背景色
           { 
-            width: 24, 
+            width: 20, 
             animate: true, 
             fillStyle: [
-              { position: 0, color: '#c0e674' },  // 起始颜色
-              { position: 1, color: '#56B37F'}   // 结束颜色
+              { position: 0, color: '#00efa7' },  // 起始颜色
+              { position: 1, color: '#00c3ac'}   // 结束颜色
             ] 
           }
         ],
@@ -131,7 +134,7 @@ export default {
         needDot: true,
         // 进度点的样式：白色大圆点和绿色小圆点
         dotStyle: [
-          { r: 24, fillStyle: '#fff', shadow: 'rgba(0,0,0,.15)' },  // 大圆点阴影
+          { r: 20, fillStyle: '#fff', shadow: 'rgba(0,0,0,.15)' },  // 大圆点阴影
           { r: 10, fillStyle: '#56B37F' }  // 小圆点颜色
         ]
       }
@@ -209,6 +212,7 @@ export default {
   margin-top: 10px;
   margin-bottom: 20px; /* 给上面的文本和下面的文本增加间距 */
   text-align: left; /* 向左对齐 */
+  
 }
 
 .sub-text {
@@ -260,6 +264,20 @@ export default {
   text-align: center;  /* 字体居中 */
 }
 
+/* 灰色小字分数*/
+.subtitle-text{
+	margin-top:4px;
+	font-size: 14px;
+	color: #646464;  /* 字体颜色为白色 */
+}
+/* 绿色小字分数*/
+.subscore-text{
+	margin-top:4px;
+	font-size: 14px;
+	color: #00c48d;  /* 字体颜色为白色 */
+}
+
+
 /* 底部内容样式 */
 .bottom-content {
   position: absolute;
@@ -275,9 +293,10 @@ export default {
 }
 
 .info-text {
+  margin-top:10px;
   display: flex; /* 使用flex布局 */
   justify-content: space-between; /* 两个元素并排显示，且有间距 */
-  width: 100%; /* 占满宽度 */
+  width: 98%; /* 占满宽度 */
   font-size: 14px;
   color: #666; /* 文字颜色 */
 }
