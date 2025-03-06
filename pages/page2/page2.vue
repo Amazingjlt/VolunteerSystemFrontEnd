@@ -73,8 +73,8 @@ export default {
     onLoad(options) {
 		const openid = uni.getStorageSync('openid');
 					uni.request({
-						url: '/login',
-						method: 'GET',
+						url: '/score',
+						method: 'POST',
 						data: {
 							openid
 						},
