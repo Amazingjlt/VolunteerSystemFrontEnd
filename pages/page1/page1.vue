@@ -2,27 +2,29 @@
   <view class="container">
     
     <view class="form-group">
-      <text class="subtitle">户籍分类</text>
-	  <view class="select">
-		  <view class="select-card" :class="{active: formData.type === '深户'}"@click="handleSelect('深户')" >
-		      <text class="label">深户</text>
-<!-- 		      <view class="check-icon" v-if="formData.type === '深户'">
-		          ✓
-		      </view> -->
-		    </view>
-		    
-		  <!-- 非深户选项 -->
-		    <view class="select-card" :class="{active: formData.type === '非深户'}"@click="handleSelect('非深户')">
-		      <text class="label">非深户</text>
-<!-- 		      <view class="check-icon" v-if="formData.type === '非深户'">
-		          ✓
-		      </view> -->
-		    </view>
+      <text class="subtitle"><text class="highlight">学籍地</text>选择</text>
+	  <view class="container">
+	    <radio-group class="radio-group" @change="onSelectChange">
+	      <label class="radio-item">
+	        <radio value="禅城区" /> 禅城区
+	      </label>
+	      <label class="radio-item">
+	        <radio value="南海区" /> 南海区
+	      </label>
+	      <label class="radio-item">
+	        <radio value="顺德区" /> 顺德区
+	      </label>
+	      <label class="radio-item">
+	        <radio value="三水区" /> 三水区
+	      </label>
+	      <label class="radio-item">
+	        <radio value="高明区" /> 高明区
+	      </label>
+	    </radio-group>
 	  </view>
-	  
     </view>
 	  <view class="footer">
-		  <button class="next-btn" type="primary" :disabled="!formData.type" @click="nextPage">下一页</button>
+		  <button class="next-btn" @click="goToNextPage">下一页</button>
 	  </view>
     
   </view>
@@ -32,47 +34,32 @@
 export default {
   data() {
     return {
-      formData: {
-        type:''
-      }
+		selectedArea: ''  // 用于保存选中的学籍地
     };
   },
   methods: {
-	      handleSelect(type) {
-	        this.formData.type = type
-	      },
+	// 用户选择学籍地时的回调
+    onSelectChange(e) {
+      this.selectedArea = e.detail.value;
+    },
     // 页面跳转并传递数据
-    nextPage() {
-		 if (!this.formData.type) {
-		        uni.showToast({ title: '请选择户籍类型', icon: 'none' })
-		        return
-		      }
-      // 发起请求到后端
-      wx.request({
-        url: 'http://127.0.0.1:4523/m1/5818861-5504164-default/submit',  // 后端接口URL
-        method: 'POST',
-        data: { type: this.formData.type },  // 请求体携带的用户数据
-        success: (res) => {
-          if (res.statusCode === 200&& res.data.success) {
-            uni.navigateTo({
-              url: '/pages/page2/page2'  // 跳转到第二页
-            });
-          } else {
-            uni.showToast({
-              title: '提交失败',
-              icon: 'none'
-            });
-          }
-        },
-        fail: (err) => {
-          uni.showToast({
-            title: '请求失败',
-            icon: 'none'
-          });
-        }
-      });
-    }
-  }
+	goToNextPage() {
+		const selectedArea = this.selectedArea;
+
+		if (!selectedArea) {
+		wx.showToast({
+			title: '请选择学籍地',
+			icon: 'none'
+		});
+		return;
+		}
+	
+		// 跳转到下一页，并传递选中的学籍地
+		wx.navigateTo({
+		url: `/pages/page2/page2?area=${selectedArea}`
+		});
+	},
+	}
 };
 </script>
 
@@ -85,40 +72,32 @@ export default {
 }
 
 
-.subtitle {
-  font-size: 35rpx;
-  font-weight: 500;
-  margin-bottom: 20rpx;
-  display: block;
-}
 
-.select{
+.subtitle{
 	display:flex;
+	margin-bottom: 30rpx;
+	font-size: 45rpx;
+	font-weight: 500;
+	color:black;
+}
+
+.highlight{
+	color:#2eceb4;
+	font-weight: 600;
+	margin:0 8rpx;
 }
 
 
-.select-card{
-	font-size: 22rpx;
-	color:#848484;
-	
-	display: flex;
-	width:30vw;
-	height:40px;
-	background-color:#f7f7f7;
-	border-radius: 30px;
-	margin-top: 15px;
-	margin-left:10px;
-	justify-content: center;
-	align-items: center;
-}
-.select-card.active {
-  background-image: linear-gradient(to right, #4cd38e, #2eceb4);
-  color:#ffffff;
+.radio-group {
+  margin-bottom: 20px;
 }
 
-/* .footer{
-	box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
-} */
+.radio-item {
+  display: block;
+  margin-bottom: 30rpx;
+  font-size:40rpx;
+  
+}
 
 .next-btn {
   background-image: linear-gradient(to right, #4cd38e, #2eceb4);
@@ -127,5 +106,12 @@ export default {
   bottom:20px;
   left:10px;
   right:10px;
+  color:#ffffff;
 }
+
+.container {
+  padding: 20px;
+}
+
+
 </style>

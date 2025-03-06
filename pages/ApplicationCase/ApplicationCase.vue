@@ -164,30 +164,31 @@ export default {
       textStyle: { fontSize: 18, fillStyle: '#333', textAlign: 'center', textBaseline: 'middle' }  // 设置文本样式
     });
   },
+
   methods: {
-    // 调用 API 获取推荐学校
-    async fetchRecommendedSchools() {
-      try {
-        // 直接调用 getRecommendedSchools 函数，并传递回调
-        getRecommendedSchools(
-          (response) => {
-            if (response.data.code === 200) {
-              // 成功获取数据，更新推荐学校数据
-              this.recommendedSchools = response.data.data;
-            } else {
-              console.error('获取推荐学校失败:', response.data.msg);
+     // 调用 API 获取推荐学校
+     async fetchRecommendedSchools() {
+        try {
+          // 直接调用 getRecommendedSchools 函数，并传递回调
+          getRecommendedSchools(
+            (response) => {
+              if (response.data.code === 200) {
+                // 成功获取数据，更新推荐学校数据
+                this.recommendedSchools = response.data.data;
+              } else {
+                console.error('获取推荐学校失败:', response.data.msg);
+              }
+            },
+            (error) => {
+              console.error('请求失败:', error);
             }
-          },
-          (error) => {
-            console.error('请求失败:', error);
-          }
-        );
-      } catch (error) {
-        console.error('网络请求失败:', error);
+          );
+        } catch (error) {
+          console.error('网络请求失败:', error);
+        }
       }
     }
-  }
-};
+  };
 </script>
 
 
@@ -448,7 +449,7 @@ export default {
 
 /* 上半部分背景渐变 */
 .recommendation-backbao {
-  background: linear-gradient(to bottom, #70d7ff, #ffffff);  /* 浅蓝色渐变到白色 */
+  background: linear-gradient(to bottom, #7cdcff, #ffffff);  /* 浅蓝色渐变到白色 */
   padding: 10px;
   border-radius: 10px 10px 0 0;  /* 仅上边添加圆角 */
 }

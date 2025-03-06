@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"mp-progress": "^1.2.14",
-		"uview-plus": "^3.3.67"
+		"uview-plus": "^3.3.68",
+		"uview-ui": "^2.0.38"
 	}
 }
