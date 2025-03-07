@@ -83,6 +83,7 @@ export default {
         // 3. 存储openid[1,7](@ref)
         if (res.data.openid) {
           uni.setStorageSync('openid', res.data.openid)
+          uni.setStorageSync('user_id', res.data.user_id)
           uni.showToast({ title: '登录成功' })
           // 跳转到首页
           uni.reLaunch({ url: '/pages/page1/page1' })
