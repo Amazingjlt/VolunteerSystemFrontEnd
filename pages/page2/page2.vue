@@ -4,7 +4,7 @@
     <form class="score">  
       <view class="input-group">
         <text>语文：</text>
-        <input v-model="formData.Chinese" type="number" placeholder="满分[120]分" min="0" max="120" @blur="validateField('Chinese', 120)"/>
+        <input v-model="formData.chinese" type="number" placeholder="满分[120]分" min="0" max="120" @blur="validateField('chinese', 120)"/>
       </view>
 	  <view class="input-group">
         <text>数学：</text>
@@ -28,7 +28,7 @@
 	  </view>
 	  <view class="input-group">
 	    <text>政治：</text>
-	    <input v-model="formData.general" type="number" placeholder="满分[60]分"min="0" max="60" @blur="validateField('general', 60)"/>
+	    <input v-model="formData.politics" type="number" placeholder="满分[60]分"min="0" max="60" @blur="validateField('politics', 60)"/>
 	  </view>
 	  <view class="input-group">
 	    <text>体育：</text>
@@ -49,46 +49,46 @@ export default {
 	  selectedArea:'',
 	  isSubmitting: false, // 新增提交状态标识
       formData: {
-        Chinese: '',
+        chinese: '',
         math: '',
 		physics:'',
 		english:'',
 		chemistry:'',
 		history:'',
-		general:'',
+		politics:'',
 		sports:''
       },
 	  fieldLabels: {
-		Chinese: '语文',
+		chinese: '语文',
 		math: '数学',
 		english: '英语',
 		physics: '物理',
 		chemistry: '化学',
 		history: '历史',
-		general: '政治',
+		politics: '政治',
 		sports: '体育'
 	},
     };
   },
     onLoad(options) {
 		const openid = uni.getStorageSync('openid');
-					uni.request({
-						url: '/score',
-						method: 'POST',
-						data: {
-							openid
-						},
-						success: (res) => {
-							console.log('成功:', res.data);
-							const {
-								formData
-							} = res.data;
-							this.formData = formData;
-						},
-						fail: (err) => {
-							console.error('请求失败:', err);
-						}
-					});
+		uni.request({
+			url: '/score',
+			method: 'POST',
+			data: {
+				openid
+			},
+			success: (res) => {
+				console.log('成功:', res.data);
+				const {
+					formData
+				} = res.data;
+				this.formData = formData;
+			},
+			fail: (err) => {
+				console.error('请求失败:', err);
+			}
+		});
       // 接收上一页传递的参数
       if (options.area) {
         this.selectedArea = options.area;
@@ -114,13 +114,13 @@ export default {
 	calculateTotal() {
       // 添加详细验证
       const subjects = [
-        { field: 'Chinese', max: 120 },
+        { field: 'chinese', max: 120 },
         { field: 'math', max: 120 },
         { field: 'english', max: 120 },
         { field: 'physics', max: 100 },
         { field: 'chemistry', max: 100 },
         { field: 'history', max: 60 },
-        { field: 'general', max: 60 },
+        { field: 'politics', max: 60 },
         { field: 'sports', max: 60 }
       ];
 
@@ -129,22 +129,21 @@ export default {
         return this.validateScore(sub.field, sub.max) ? total + value : total;
       }, 0);
 	},
-    // 提交数据到后端
-    async submitData() {
+    // 提交数据到展示页面
+    submitData() {
 	  if (this.isSubmitting) return;
       // 校验所有字段已填写
       const requiredFields = [
-        { field: 'Chinese', max: 120 },
+        { field: 'chinese', max: 120 },
         { field: 'math', max: 120 },
         { field: 'english', max: 120 },
         { field: 'physics', max: 100 },
         { field: 'chemistry', max: 100 },
         { field: 'history', max: 60 },
-        { field: 'general', max: 60 },
+        { field: 'politics', max: 60 },
         { field: 'sports', max: 60 }
       ];
       
-
       const invalidField = requiredFields.find(sub => {
         const value = this.formData[sub.field];
         return !value || !this.validateScore(sub.field, sub.max);
@@ -159,44 +158,29 @@ export default {
       }
 
       this.isSubmitting = true;
-      wx.showLoading({ title: '提交中...', mask: true });
-
-      
-            try {
-              const res = await new Promise((resolve, reject) => {
-                wx.request({
-                  url: 'http://127.0.0.1:4523/m1/5818861-5504164-default/submit',
-                  method: 'POST',
-                  header: {
-                    'Content-Type': 'application/json' // 添加请求头
-                  },
-                  data: {
-                    area: this.selectedArea,
-                    total: this.calculateTotal(),
-                    details: this.formData // 添加明细数据
-                  },
-                  success: resolve,
-                  fail: reject
-                });
-              });
-      
-              wx.hideLoading();
-              this.isSubmitting = false;
-      
-              if (res.statusCode === 200 && res.data.success) {
-                wx.showToast({ title: '提交成功' });
-                wx.navigateTo({
-                  url: '/pages/ApplicationCase/ApplicationCase'
-                });
-              } else {
-                wx.showToast({ title: res.data.message || '提交失败', icon: 'none' });
-              }
-            } catch (err) {
-              wx.hideLoading();
-              this.isSubmitting = false;
-              wx.showToast({ title: '请求失败，请检查网络', icon: 'none' });
-            }
-          }
+	  
+	  // 准备传递的数据
+		const dataToPass = {
+		area: this.selectedArea,
+		total: this.calculateTotal(),
+		details: this.formData
+		};
+	
+		// 将数据存储到本地
+		wx.setStorageSync('gradeData', dataToPass);
+		console.log('gradeData', dataToPass);
+	       wx.navigateTo({
+	         url: '/pages/ApplicationCase/ApplicationCase',
+	         success: () => {
+	           wx.showToast({ title: '提交成功' });
+	           this.isSubmitting = false;
+	         },
+	         fail: () => {
+	           wx.showToast({ title: '跳转失败', icon: 'none' });
+	           this.isSubmitting = false;
+	         }
+	       });
+    }
         
   }
 };

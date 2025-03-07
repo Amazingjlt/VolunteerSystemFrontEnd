@@ -9,6 +9,20 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path" : "pages/page1/page1",
+			"style" : 
+			{
+				"navigationBarTitleText" : "志愿预测"
+			}
+		},
+		{
+			"path" : "pages/page2/page2",
+			"style" : 
+			{
+				"navigationBarTitleText" : "志愿预测"
+			}
+		},
+		{
 			"path": "pages/ApplicationCase/ApplicationCase",
 			"style": {
 				"navigationBarTitleText": "志愿填报方案"
@@ -33,21 +47,7 @@
 			{
 				"navigationBarTitleText" : "登录"
 			}
-		},
-		{
-			"path" : "pages/page1/page1",
-			"style" : 
-			{
-				"navigationBarTitleText" : "志愿预测"
-			}
-		},
-		{
-			"path" : "pages/page2/page2",
-			"style" : 
-			{
-				"navigationBarTitleText" : "志愿预测"
-			}
-		}
+		}	
 	],
 
 	"globalStyle": {

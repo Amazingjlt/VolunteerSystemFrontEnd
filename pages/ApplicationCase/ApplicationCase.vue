@@ -11,7 +11,7 @@
       <canvas class="canvas" type="2d" id="progress"></canvas>
       <view class="status-ctn">
         <view class="desc-text">中考分</view>
-        <view class="status-count">{{ score }}分</view>
+        <view class="status-count">{{ total }}分</view>
       </view>
       <!-- 底部内容 -->
       <view class="bottom-content">
@@ -25,7 +25,7 @@
           <view class="info-item">
             <u-icon name="map-fill" size="22" class="icon" color="#bbbbbb" margin-top="5px"></u-icon>
             <text class="subtitle-text">所在地区：</text>
-			<text class="subscore-text">{{ place }}</text>
+			<text class="subscore-text">佛山市/{{ area }}</text>
           </view>
         </view>
       </view>
@@ -93,16 +93,19 @@
 
 <script>
 import MpProgress from 'mp-progress';
-
-
+import { getSchoolRecord } from '@/api/application.js'; // 引入 getSchoolRecord 接口
 // 假设您已经在 application.js 中定义了 getRecommendedSchools API
-import { getRecommendedSchools } from '@/api/application.js';
+// import { getRecommendedSchools } from '@/api/application.js';
 
 export default {
   data() {
     return {
-      score: 635.0,  // 用户分数
-	  place:"广东省/深圳市/宝安区",
+	  area: '',//从缓存中获取
+	  total: 0,//从缓存中获取用户分数
+	  details: {},//从缓存中获取
+      score: 0,   //用户分数
+	  user_id: 2,//用户id
+	  //place:"广东省/深圳市/宝安区",
       maxScore: 750, // 满分
       recommendedSchools: {
         chong: [],
@@ -141,60 +144,104 @@ export default {
     };
   },
   mounted() {
-    // 页面加载时调用 API 获取推荐学校数据
-    this.fetchRecommendedSchools();
-    
-    // 直接计算百分比
-    const percentage = (this.score / this.maxScore) * 100;
-    this.config.percentage = percentage;  // 动态设置百分比
-  
-    const mprogress = new MpProgress({
-      target: this,  // 页面上下文
-      canvasId: 'progress',  // canvas的ID
-      canvasSize: this.config.canvasSize,  // 画布尺寸
-      percent: this.config.percent,  // 进度百分比
-      barStyle: this.config.barStyle,  // 进度条样式
-      needDot: this.config.needDot,  // 是否显示进度点
-      dotStyle: this.config.dotStyle,  // 进度点样式
-      percentage: this.config.percentage  // 绘制多少进度
-    });
-
-    mprogress.draw(this.config.percentage, {
-      text: `剩余车位: 100/127\n完成进度: ${this.config.percentage}%`,  // 在圆环中间显示文本
-      textStyle: { fontSize: 18, fillStyle: '#333', textAlign: 'center', textBaseline: 'middle' }  // 设置文本样式
-    });
+	this.fetchRecommendedSchools(); // 调用接口获取推荐学校
+	this.updateProgress(); // 更新进度条
   },
 
   methods: {
+	// 更新进度条
+	updateProgress() {
+      const percentage = (this.score / this.maxScore) * 100;
+      this.config.percentage = percentage;
+
+      const mprogress = new MpProgress({
+        target: this,
+        canvasId: 'progress',
+        canvasSize: this.config.canvasSize,
+        percent: this.config.percent,
+        barStyle: this.config.barStyle,
+        needDot: this.config.needDot,
+        dotStyle: this.config.dotStyle,
+        percentage: this.config.percentage
+      });
+
+      mprogress.draw(this.config.percentage, {
+        text: `剩余车位: 100/127\n完成进度: ${this.config.percentage}%`,
+        textStyle: { fontSize: 18, fillStyle: '#333', textAlign: 'center', textBaseline: 'middle' }
+      });
+    },
      // 调用 API 获取推荐学校
-     async fetchRecommendedSchools() {
-        try {
-          // 直接调用 getRecommendedSchools 函数，并传递回调
-          getRecommendedSchools(
-            (response) => {
-              if (response.data.code === 200) {
-                // 成功获取数据，更新推荐学校数据
-                this.recommendedSchools = response.data.data;
-              } else {
-                console.error('获取推荐学校失败:', response.data.msg);
-              }
-            },
-            (error) => {
-              console.error('请求失败:', error);
-            }
-          );
-        } catch (error) {
-          console.error('网络请求失败:', error);
-        }
-      }
-    }
+    //  async fetchRecommendedSchools() {
+    //     try {
+    //       // 直接调用 getRecommendedSchools 函数，并传递回调
+    //       getRecommendedSchools(
+    //         (response) => {
+    //           if (response.data.code === 200) {
+    //             // 成功获取数据，更新推荐学校数据
+    //             this.recommendedSchools = response.data.data;
+    //           } else {
+    //             console.error('获取推荐学校失败:', response.data.msg);
+    //           }
+    //         },
+    //         (error) => {
+    //           console.error('请求失败:', error);
+    //         }
+    //       );
+    //     } catch (error) {
+    //       console.error('网络请求失败:', error);
+    //     }
+    //   }
+    // },
+	// 调用 API 获取推荐学校
+	async fetchRecommendedSchools() {
+	    try {
+	        const score = this.score;
+	        const zone = this.area;
+	        const user_id = this.user_id;
+	        const details = this.details;
+	
+	        // 调用 getSchoolRecord 接口
+	        getSchoolRecord(score, zone, user_id, details, 
+	          (response) => {
+	            if (response.code === '200') {
+	              // 成功获取数据，更新推荐学校数据
+	              this.recommendedSchools = {
+	                chong: response.data.chong.map(school => school.schoolName),
+	                wen: response.data.wen.map(school => school.schoolName),
+	                bao: response.data.bao.map(school => school.schoolName)
+	              };
+	            } else {
+	              console.error('获取推荐学校失败:', response.msg);
+	            }
+	          },
+	          (error) => {
+	            console.error('请求失败:', error);
+	          }
+	        );
+	      } catch (error) {
+	        console.error('网络请求失败:', error);
+	      }
+	    }
+    },
+	//从缓存中获取
+	 onLoad() {
+	    const data = wx.getStorageSync('gradeData');
+	    if (data) {
+	      this.area = data.area;
+	      this.total = data.total;
+	      this.details = data.details;
+		  this.score = data.total;
+	      console.log('接收到的数据:', data);
+	    } else {
+	      wx.showToast({ title: '未接收到数据', icon: 'none' });
+	    }
+	  }
   };
 </script>
 
 
 
 <style scoped>
-/* 设置相关样式 */
 /* 绿底白字部分 */
 .green-header {
   background-image: linear-gradient(to bottom, #00c58d, #ffffff);  /* 渐变从绿色到白色 */

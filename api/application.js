@@ -15,36 +15,34 @@ export const getRecommendedSchools = async (success, fail) => {
       }
     }
   });
+};
 
-  // 如果需要真实请求后端，可以使用以下方式：
-  /*
-  await uni.request({
-    url: 'http://localhost:3000/api/recommendedSchools', // 后端接口地址
-    method: 'GET',
-    success: (res) => {
-      const statusCode = res.statusCode;
-      if (statusCode === 200) {
-        // 成功响应
-        success(res.data);
-      } else if (statusCode === 400) {
-        // 客户端错误
-        console.error('Bad Request: ', res.data);
-        fail({ message: 'Bad Request', details: res.data });
-      } else if (statusCode === 500) {
-        // 服务器错误
-        console.error('Internal Server Error: ', res.data);
-        fail({ message: 'Internal Server Error', details: res.data });
-      } else {
-        // 处理其他非200的状态码
-        console.error('Unexpected status code: ', statusCode, res.data);
-        fail({ message: 'Unexpected status code', code: statusCode, details: res.data });
-      }
-    },
-    fail: (err) => {
-      // 网络或其他错误
-      console.error('Request failed: ', err);
-      fail({ message: 'Request failed', error: err });
-    }
-  });
-  */
+
+
+export const getSchoolRecord = async (score, zone, user_id, details, success, fail) => {
+    await uni.request({
+        url: 'https://43.139.109.104:8081/record/getSchool', // 替换为实际的API地址
+        method: 'POST',
+        header: {
+            "Content-Type": "application/json"
+        },
+        data: {
+            score: score,
+            zone: zone,
+            user_id: user_id,
+            details: details
+        },
+        success: (res) => {
+            console.log('getSchoolRecord: ok');
+            if (res.statusCode === 200 && res.data.code === '200') {
+                success(res.data); // 返回成功的数据
+            } else {
+                fail(res.data); // 返回失败的数据
+            }
+        },
+        fail: (err) => {
+            console.error('getSchoolRecord: fail', err);
+            fail(err); // 返回失败的错误信息
+        }
+    });
 };
