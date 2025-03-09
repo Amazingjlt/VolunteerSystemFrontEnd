@@ -166,7 +166,7 @@ export default {
 		details: this.formData
 		};
 	
-		// 将数据存储到本地
+		// 将数据存储到本地接口
 		wx.setStorageSync('gradeData', dataToPass);
 		console.log('gradeData', dataToPass);
 	       wx.navigateTo({
