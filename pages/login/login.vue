@@ -74,6 +74,9 @@ export default {
         const res = await uni.request({
           url: '/login',
           method: 'POST',
+          header: {
+							"Content-Type": "application/json" // 关键设置
+					},
           data: {
             phone: this.phone,
             code: loginRes.code
