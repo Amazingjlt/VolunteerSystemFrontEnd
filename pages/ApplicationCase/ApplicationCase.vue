@@ -146,7 +146,6 @@ import MpProgress from 'mp-progress';
 import { getHistoryRecord } from '@/api/application.js'; // 引入 getRecord 接口
 import { getHistorySchool } from '@/api/application.js';
 import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord 接口
-	// 假设您已经在 application.js 中定义了 getRecommendedSchools API
 	// import { getRecommendedSchools } from '@/api/application.js';
 
 	export default {
@@ -353,6 +352,8 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 			    console.error('网络请求失败:', error);
 			  }
 			}
+			
+			
 		},
 		//从缓存中获取
 		onLoad() {

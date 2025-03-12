@@ -24,7 +24,7 @@
       class="login-btn" 
       :disabled="!isValidPhone" 
       @click="handleLogin"
-    >手机号一键登录</button>
+    >一键登录</button>
   </view>
 </template>
 
@@ -50,7 +50,7 @@ export default {
     },
 
     // 登录逻辑
-    async handleLogin() {
+    async handleLogin1() {
       if (!this.isValidPhone) {
         uni.showToast({ title: '请输入正确的手机号', icon: 'none' })
         return
