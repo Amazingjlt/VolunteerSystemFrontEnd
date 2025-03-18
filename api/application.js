@@ -109,7 +109,7 @@ export const getHistorySchool = async (score, zone, success, fail) => {
 export const getOpenID = async (code) => {
     return new Promise((resolve, reject) => {
         uni.request({
-            url: 'http://43.139.109.104:8081/user/wx_login', // 替换为实际的请求地址
+            url: 'http://127.0.0.1:8081/user/wx_login', // 替换为实际的请求地址
             method: 'POST',
             header: {
                 "Content-Type": "application/json"
@@ -133,32 +133,6 @@ export const getOpenID = async (code) => {
     });
 };
 
-// export const getPhone = async (code) => {
-//     return new Promise((resolve, reject) => {
-//         uni.request({
-//             url: 'http://127.0.0.1:8081/user/phone', // 替换为实际的请求地址
-//             method: 'POST',
-//             header: {
-//                 "Content-Type": "application/json"
-//             },
-//             data: {
-//                 code: code
-//             },
-//             success: (res) => {
-//                 console.log('getPhone: ok');
-//                 if (res.statusCode === 200 && res.data.code === '200') {
-//                     resolve(res.data); // 成功时调用 resolve
-//                 } else {
-//                     reject(res.data); // 失败时调用 reject
-//                 }
-//             },
-//             fail: (err) => {
-//                 console.error('getOpenID: fail', err);
-//                 reject(err); // 请求失败时调用 reject
-//             }
-//         });
-//     });
-// };
 export const getPhone = (code, callback) => {
     uni.request({
         url: 'http://127.0.0.1:8081/user/phone', // 替换为实际的请求地址
