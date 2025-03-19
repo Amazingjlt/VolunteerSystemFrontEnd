@@ -32,7 +32,7 @@
 	  </view>
 	  <view class="input-group">
 	    <text>体育：</text>
-	    <input v-model="formData.sports"type="number" placeholder="满分[60]分" min="0" max="60" @blur="validateField('sports', 60)"/>
+	    <input v-model="formData.physical"type="number" placeholder="满分[60]分" min="0" max="60" @blur="validateField('physical', 60)"/>
 	  </view>
 	  </form>
 	  <view class="footer">
@@ -56,7 +56,7 @@ export default {
 		chemistry:'',
 		history:'',
 		politics:'',
-		sports:''
+		physical:''
       },
 	  fieldLabels: {
 		chinese: '语文',
@@ -66,7 +66,7 @@ export default {
 		chemistry: '化学',
 		history: '历史',
 		politics: '政治',
-		sports: '体育'
+		physical: '体育'
 	},
     };
   },
@@ -121,7 +121,7 @@ export default {
         { field: 'chemistry', max: 100 },
         { field: 'history', max: 60 },
         { field: 'politics', max: 60 },
-        { field: 'sports', max: 60 }
+        { field: 'physical', max: 60 }
       ];
 
       return subjects.reduce((total, sub) => {
@@ -141,7 +141,7 @@ export default {
         { field: 'chemistry', max: 100 },
         { field: 'history', max: 60 },
         { field: 'politics', max: 60 },
-        { field: 'sports', max: 60 }
+        { field: 'physical', max: 60 }
       ];
       
       const invalidField = requiredFields.find(sub => {

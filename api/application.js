@@ -55,7 +55,7 @@ export const getSchoolRecord = async (score, zone, user_id, details, success, fa
 export const getHistoryRecord = (user_id) => {
   return new Promise((resolve, reject) => {
     wx.request({
-      url: 'http://43.139.109.104:8081/user/getRecord', // 接口地址
+      url: 'http://43.139.109.104:8081/record/getAllRecord', // 接口地址
       method: 'POST', // 请求方法
       header: {
         'Content-Type': 'application/json' // 请求头

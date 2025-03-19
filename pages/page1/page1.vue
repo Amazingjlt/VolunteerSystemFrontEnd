@@ -6,19 +6,19 @@
 	  <view class="container">
 	    <radio-group class="radio-group" @change="onSelectChange">
 	      <label class="radio-item">
-	        <radio value="禅城区" /> 禅城区
+	        <radio value="禅城" /> 禅城区
 	      </label>
 	      <label class="radio-item">
-	        <radio value="南海区" /> 南海区
+	        <radio value="南海" /> 南海区
 	      </label>
 	      <label class="radio-item">
-	        <radio value="顺德区" /> 顺德区
+	        <radio value="顺德" /> 顺德区
 	      </label>
 	      <label class="radio-item">
-	        <radio value="三水区" /> 三水区
+	        <radio value="三水" /> 三水区
 	      </label>
 	      <label class="radio-item">
-	        <radio value="高明区" /> 高明区
+	        <radio value="高明" /> 高明区
 	      </label>
 	    </radio-group>
 	  </view>
