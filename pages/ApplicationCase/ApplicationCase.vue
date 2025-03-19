@@ -8,7 +8,7 @@
 		</view>
 		<view class="white-container">
 			<!-- 使用 canvas 进行进度条绘制 -->
-			<canvas class="canvas" type="2d" id="progress"></canvas>
+			<canvas v-if="!showPopup" class="canvas" type="2d" id="progress"></canvas>
 			<view class="status-ctn">
 				<view class="desc-text">中考分</view>
 				<view class="status-count">{{ score }}分</view>
@@ -52,93 +52,109 @@
 
 
 		<!-- 推荐学校部分 -->
+		<!-- 修改后的推荐学校部分 -->
 		<view class="recommendation">
-			<text class="recommendation-title">根据您的分数与排名推荐学校如下</text>
-
-			<!-- 推荐冲高校 -->
-			<view class="recommendation-category chong">
-				<view class="recommendation-backchong">
-					<view class="category-header">
-						<u-icon name="thumb-up-fill" size="40" class="icon" color="#ff8870"></u-icon> <!-- 橘色图标 -->
-						<text class="category-title">推荐冲高校</text>
-					</view>
-					<text class="school-title">学校名称</text>
-					<view class="divider"></view> <!-- 灰色分割线 -->
-				</view>
-				<view class="category-items">
-					<view v-for="(school, index) in recommendedSchools.chong" :key="index" class="school-item">
-						<text>{{ school }}</text>
-					</view>
-				</view>
-			</view>
-
-			<!-- 推荐持平校 -->
-			<view class="recommendation-category wen">
-				<view class="recommendation-backwen">
-					<view class="category-header">
-						<u-icon name="thumb-up-fill" size="40" class="icon" color="#00c591"></u-icon> <!-- 蓝色图标 -->
-						<text class="category-title">推荐持平校</text>
-					</view>
-					<text class="school-title">学校名称</text>
-					<view class="divider"></view> <!-- 灰色分割线 -->
-				</view>
-				<view class="category-items">
-					<view v-for="(school, index) in recommendedSchools.wen" :key="index" class="school-item">
-						<text>{{ school }}</text>
-					</view>
-				</view>
-			</view>
-
-			<!-- 推荐保底校 -->
-			<view class="recommendation-category bao">
-				<view class="recommendation-backbao">
-					<view class="category-header">
-						<u-icon name="thumb-up-fill" size="40" class="icon" color="#70d7ff"></u-icon> <!-- 浅蓝色图标 -->
-						<text class="category-title">推荐保底校</text>
-					</view>
-					<text class="school-title">学校名称</text>
-					<view class="divider"></view> <!-- 灰色分割线 -->
-				</view>
-				<view class="category-items">
-					<view v-for="(school, index) in recommendedSchools.bao" :key="index" class="school-item">
-						<text>{{ school }}</text>
-					</view>
-				</view>
-			</view>
+		    <text class="recommendation-title">根据您的分数与排名推荐学校如下</text>
+		
+		    <!-- 推荐冲高校 -->
+		    <view class="recommendation-category chong">
+		        <view class="recommendation-backchong">
+		            <view class="category-header">
+		                <u-icon name="thumb-up-fill" size="40" class="icon" color="#ff8870"></u-icon>
+		                <text class="category-title">推荐冲学校</text>
+		            </view>
+		            <view class="divider"></view>
+		        </view>
+		        <view class="category-items">
+		            <view v-for="(school, index) in recommendedSchools.chong" :key="index" class="school-card chong-card">
+		                <view class="school-header">
+		                    <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
+		                    <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
+		                </view>
+		                <view class="school-info">
+		                    <text class="score">分数线：{{ school.score1 }}分</text>
+		                    <text class="detail">类别：{{ school.detail }}</text>
+		                </view>
+		            </view>
+		        </view>
+		    </view>
+		
+		    <!-- 推荐持平校 -->
+		    <view class="recommendation-category wen">
+		        <view class="recommendation-backwen">
+		            <view class="category-header">
+		                <u-icon name="thumb-up-fill" size="40" class="icon" color="#00c591"></u-icon>
+		                <text class="category-title">推荐持平校</text>
+		            </view>
+		            <view class="divider"></view>
+		        </view>
+		        <view class="category-items">
+		            <view v-for="(school, index) in recommendedSchools.wen" :key="index" class="school-card wen-card">
+		                <view class="school-header">
+		                    <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
+		                    <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
+		                </view>
+		                <view class="school-info">
+		                    <text class="score">分数线：{{ school.score1 }}分</text>
+		                    <text class="detail">类别：{{ school.detail }}</text>
+		                </view>
+		            </view>
+		        </view>
+		    </view>
+		
+		    <!-- 推荐保底校 -->
+		    <view class="recommendation-category bao">
+		        <view class="recommendation-backbao">
+		            <view class="category-header">
+		                <u-icon name="thumb-up-fill" size="40" class="icon" color="#70d7ff"></u-icon>
+		                <text class="category-title">推荐保底校</text>
+		            </view>
+		            <view class="divider"></view>
+		        </view>
+		        <view class="category-items">
+		            <view v-for="(school, index) in recommendedSchools.bao" :key="index" class="school-card bao-card">
+		                <view class="school-header">
+		                    <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
+		                    <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
+		                </view>
+		                <view class="school-info">
+		                    <text class="score">分数线：{{ school.score1 }}分</text>
+		                    <text class="detail">类别：{{ school.detail }}</text>
+		                </view>
+		            </view>
+		        </view>
+		    </view>
 		</view>
 
 	<!-- 提交按钮 -->
 	<view class="button-container">
 		<text class="submit-text">成绩分析-专属指导学校-学校优劣对比</text>
 		<button class="submit-btn" @click="submit">专家指导</button>
-	</view>
-	<view v-if="showPopup" class="popup-mask">
-	<view class="popup-content">
-		<!-- 关闭按钮 -->
-		<view class="close-btn" @click="showPopup = false">×</view>
-		
-		<!-- 弹窗内容 -->
-		<view class="popup-body">
-		<text class="popup-title">温馨提示</text>
-		<view class="popup-text">
-			<text>除成绩外还需要参照其他因素，为了保证推荐的学校更准确，请</text>
-			<text class="highlight-text">"截图二维码"</text>
-			<text>添加老师微信，提供更多信息，获取免费志愿预测服务</text>
-		</view>
-		
-		<!-- 二维码容器 -->
-		<image 
-			src="" 
-			class="qrcode-image"
-			mode="aspectFit"
-		/>
-		
-		<text class="tip-text">截图保存后扫码添加</text>
-		</view>
-	</view>
-	</view>
-
-	</view>
+	</view>		
+    <!-- 使用cover-view试图遮住canvas，但是没有用，所以这里的cover可以删掉 -->
+    <cover-view v-if="showPopup" class="popup-mask">
+        <cover-view class="popup-content">
+            <!-- 关闭按钮 -->
+            <cover-view class="close-btn" @click="closePopup">×</cover-view>
+            
+            <!-- 弹窗内容 -->
+            <cover-view class="popup-body">
+                <cover-view class="popup-title">温馨提示</cover-view>
+                <cover-view class="popup-text">
+                    <cover-view>除成绩外还需要参照其他因素，为了保证推荐的学校更准确，请</cover-view>
+                    <cover-view class="highlight-text">"截图二维码"</cover-view>
+                    <cover-view>添加老师微信，提供更多信息，获取免费志愿预测服务</cover-view>
+                </cover-view>
+                <cover-image 
+                    src="/static/erweima.png" 
+                    class="qrcode-image"
+                    mode="aspectFit"
+                />
+                <cover-view class="tip-text">截图保存后扫码添加</cover-view>
+            </cover-view>
+        </cover-view>
+    </cover-view>
+</view>
 </template>
 
 <script>
@@ -146,7 +162,6 @@ import MpProgress from 'mp-progress';
 import { getHistoryRecord } from '@/api/application.js'; // 引入 getRecord 接口
 import { getHistorySchool } from '@/api/application.js';
 import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord 接口
-	// import { getRecommendedSchools } from '@/api/application.js';
 
 	export default {
 		data() {
@@ -231,8 +246,14 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 				return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`; // 返回格式化后的时间
 			},
 			
-			submit() {
-			  this.showPopup = true; // 提交时显示弹窗
+			 submit() {
+			    this.showPopup = true; // 显示弹窗，隐藏 canvas
+			 },
+			closePopup() {// 用于在关闭弹窗之后重新显示 canvas
+			    this.showPopup = false; // 关闭弹窗，显示 canvas
+				this.$nextTick(() => {
+				            this.updateProgress(); // 在 DOM 更新后重新绘制 canvas
+				        });
 			},
 			// 新增方法
 			toggleHistory() {
@@ -296,56 +317,38 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 				});
 			},
 			// 调用 API 获取推荐学校
-			// 调用 API 获取推荐学校
 			async fetchRecommendedSchools() {
 			  try {
 			    const score = this.score;
 			    const zone = this.area;
 			    const user_id = this.user_id;
 			    const details = this.details;
-			    console.log("fetchRecommendedSchools", details);
 			
 			    if (Object.keys(details).length === 0) {
-			      // 如果 details 为空，调用 getHistorySchool 接口
-			      console.log("details 为空，调用 getHistorySchool 接口", details);
 			      getHistorySchool(score, zone,
 			        (response) => {
-						console.log("getHistorySchool 返回数据:", response);
 			          if (response.code === '200') {
-			            // 成功获取数据，更新推荐学校数据
 			            this.recommendedSchools = {
-			              chong: response.data.chong.map(school => school.schoolName),
-			              wen: response.data.wen.map(school => school.schoolName),
-			              bao: response.data.bao.map(school => school.schoolName)
+			              chong: response.data.chong,
+			              wen: response.data.wen,
+			              bao: response.data.bao
 			            };
-			          } else {
-			            console.error('获取推荐学校失败:', response.msg);
 			          }
 			        },
-			        (error) => {
-			          console.error('请求失败:', error);
-			        }
+			        (error) => { /* 错误处理 */ }
 			      );
 			    } else {
-			      // 如果 details 不为空，调用 getSchoolRecord 接口
-			      console.log("details 不为空，调用 getSchoolRecord 接口", details);
 			      getSchoolRecord(score, zone, user_id, details,
 			        (response) => {
-						console.log("getSchoolRecord 返回数据:", response);
 			          if (response.code === '200') {
-			            // 成功获取数据，更新推荐学校数据
 			            this.recommendedSchools = {
-			              chong: response.data.chong.map(school => school.schoolName),
-			              wen: response.data.wen.map(school => school.schoolName),
-			              bao: response.data.bao.map(school => school.schoolName)
+			              chong: response.data.chong,
+			              wen: response.data.wen,
+			              bao: response.data.bao
 			            };
-			          } else {
-			            console.error('获取推荐学校失败:', response.msg);
 			          }
 			        },
-			        (error) => {
-			          console.error('请求失败:', error);
-			        }
+			        (error) => { /* 错误处理 */ }
 			      );
 			    }
 			  } catch (error) {
@@ -458,6 +461,7 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 	}
 
 	.white-container {
+		z-index: 1;
 		position: relative;
 		background-color: white;
 		padding: 20px;
@@ -478,12 +482,12 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 	}
 
 	.canvas {
-		position: absolute;
-		/* 相对于最近的有定位属性（relative, absolute, fixed）的父元素进行定位,也就是.white-container  */
-		margin-top: -150px;
-		left: 100;
-		width: 500rpx;
-		height: 500rpx;
+	    position: absolute;/* 相对于最近的有定位属性（relative, absolute, fixed）的父元素进行定位,也就是.white-container  */
+	    margin-top: -150px;
+	    left: 100;
+	    width: 500rpx;
+	    height: 500rpx;
+	    z-index: 0; /* 新增 */
 	}
 
 	.status-ctn {
@@ -546,7 +550,7 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 		/* 分隔线高度 */
 		background-color: #e0e0e0;
 		/* 灰色分隔线 */
-		margin-bottom: 10px;
+		margin-bottom: 5px;
 		/* 分隔线与内容的间距 */
 	}
 
@@ -601,9 +605,7 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 		padding: 15px;
 	}
 
-	.category-items {
-		margin-left: 10px;
-	}
+	
 
 	.school-item {
 		font-size: 14px;
@@ -668,7 +670,11 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 
 	/* 学校项容器 */
 	.category-items {
-		padding: 15px;
+		padding-left: 15px;
+		padding-right: 15px;
+		padding-bottom: 15px;
+		padding-top: 5px;
+		margin-left: 0px;
 	}
 
 	/* 每个学校项 */
@@ -773,28 +779,32 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 	}
 	/* 弹窗蒙层 */
 	.popup-mask {
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  right: 0;
-	  bottom: 0;
-	  background-color: rgba(0, 0, 0, 0.5);
-	  display: flex;
-	  flex-direction: column;
-	  justify-content: center;
-	  align-items: center;
-	  z-index: 999;
+	    position: fixed;
+		width: 100%;
+        height: 100%;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    background-color: rgba(0, 0, 0, 0.5);
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	    align-items: center;
+	    z-index: 9999999; /* 确保高于canvas */
+		visibility: visible;
 	}
 	
 	/* 弹窗内容 */
 	.popup-content {
-	  position: relative;
+	   position: fixed;
 	  width: 600rpx;
 	  height: 750rpx; /* 设置弹窗高度 */
 	  background-color: #fff;
 	  border-radius: 20rpx;
 	  padding: 40rpx;
 	  box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.2);
+	  visibility: visible;
 	}
 	
 	/* 关闭按钮 */
@@ -856,4 +866,54 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 	  color: #999;
 	  margin-top: 30rpx;
 	}
+	/* 新增卡片样式 */
+	.school-card {
+	    background: white;
+	    border-radius: 8px;
+	    padding: 15px;
+	    margin: 10px 0;
+	    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+	/* 左部边框颜色 */
+	.chong-card {
+	    border-left: 4px solid #ff8870;
+	}
+	
+	.wen-card {
+	    border-left: 4px solid #00c591;
+	}
+	
+	.bao-card {
+	    border-left: 4px solid #70d7ff;
+	}
+	
+	.school-header {
+	    margin-bottom: 10px;
+	}
+	
+	.school-name {
+	    font-size: 16px;
+	    font-weight: bold;
+	    display: block;
+	}
+	
+	.school-code {
+	    font-size: 12px;
+	    color: #666;
+	}
+	
+	.school-info {
+	    display: flex;
+	    justify-content: space-between;
+	    font-size: 14px;
+	}
+	
+	.score {
+	    color: #00c58d;
+	}
+	
+	.detail {
+	    color: #666;
+	}
+	
 </style>
