@@ -7,7 +7,15 @@
 			"^u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
 		}
 	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path" : "pages/oneLogin/oneLogin",
+			"style" : 
+			{
+				"navigationBarTitleText" : "一键登录"
+			// 这里有问题（没有企业认证
+			}
+		},
 		{
 			"path": "pages/page1/page1",
 			"style": {
@@ -43,14 +51,6 @@
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录"
-			}
-		},
-		{
-			"path" : "pages/oneLogin/oneLogin",
-			"style" : 
-			{
-				"navigationBarTitleText" : "一键登录"
-			// 这里有问题（没有企业认证
 			}
 		}
 

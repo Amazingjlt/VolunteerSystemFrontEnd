@@ -16,23 +16,23 @@
 		wx.login({
 			success: (res) => {
 				if (res.code) { // 微信登录成功 已拿到code
-					fetchOpenID(res.code); // 注意传入 res.code
-					console.log("获取登录Code成功"+ res.code)
+					fetchUserID(res.code); // 注意传入 res.code
 				} else {
 					console.log('前端获取登录Code失败！' + res.errMsg);
 				}
 			}
 		});
 	});
-	async function fetchOpenID(code) {
+	async function fetchUserID(code) {
 		try {
-			const openID = await getOpenID(code);
-			console.log("openID:"+openID);
+			const userid = await getOpenID(code);
+			console.log("userID:"+userid);
+			uni.setStorageSync('user_id', userid);
 
 		} catch (error) {
-			console.error('从后端获取openid失败:', error);
+			console.error('从后端获取userID失败:', error);
 			wx.showToast({
-				title: '获取openid失败',
+				title: '获取userid失败',
 				icon: 'none'
 			});
 		}

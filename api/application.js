@@ -105,7 +105,7 @@ export const getHistorySchool = async (score, zone, success, fail) => {
         }
     });
 };
-
+// 实际是UserID
 export const getOpenID = async (code) => {
     return new Promise((resolve, reject) => {
         uni.request({
@@ -118,15 +118,14 @@ export const getOpenID = async (code) => {
                 code: code
             },
             success: (res) => {
-                console.log('getOpenID: ok');
                 if (res.statusCode === 200 && res.data.code === '200') {
-                    resolve(res.data); // 成功时调用 resolve
+                    resolve(res.data.data); // 成功时调用 resolve
                 } else {
                     reject(res.data); // 失败时调用 reject
                 }
             },
             fail: (err) => {
-                console.error('getOpenID: fail', err);
+                console.error('获取userID失败:', err);
                 reject(err); // 请求失败时调用 reject
             }
         });
