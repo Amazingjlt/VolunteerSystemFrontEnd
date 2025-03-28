@@ -61,15 +61,7 @@ export default {
 	},
 	},
 	onLoad() {
-		wx.login({
-			success: (res) => {
-				if (res.code) { // 微信登录成功 已拿到code
-					fetchOpenID(res.code); // 注意传入 res.code
-				} else {
-					console.log('登录失败！' + res.errMsg);
-				}
-			}
-		});
+
 	}
 };
 </script>

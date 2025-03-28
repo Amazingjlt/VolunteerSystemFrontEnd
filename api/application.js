@@ -109,7 +109,7 @@ export const getHistorySchool = async (score, zone, success, fail) => {
 export const getOpenID = async (code) => {
     return new Promise((resolve, reject) => {
         uni.request({
-            url: 'http://127.0.0.1:8081/user/wx_login', // 替换为实际的请求地址
+            url: 'http://43.139.109.104:8081/user/wx_login', // 替换为实际的请求地址
             method: 'POST',
             header: {
                 "Content-Type": "application/json"
@@ -132,27 +132,29 @@ export const getOpenID = async (code) => {
     });
 };
 
-export const getPhone = (code, callback) => {
+// 后端并不会返回手机号回来
+export const setPhone = (code,userid,callback) => {
     uni.request({
-        url: 'http://127.0.0.1:8081/user/phone', // 替换为实际的请求地址
+        url: 'http://43.139.109.104:8081/user/phone', // 替换为实际的请求地址
         method: 'POST',
         header: {
             "Content-Type": "application/json"
         },
         data: {
-            code: code
+            code: code,
+			userid : userid
         },
         success: (res) => {
-            console.log('getPhone: ok');
-            if (res.statusCode === 200 && res.data.code === '200') {
-                callback(null, res.data); // 成功时调用回调函数，返回结果
+            if (res.statusCode === 200 && res.data.msg=="success") {
+				console.log('后端设置手机号成功');
+				callback();
+				uni.setStorageSync("phoneState","success");
             } else {
-                callback(res.data, null); // 失败时调用回调函数，返回错误信息
+				console.log('后端获取手机号失败',res.data.msg);
             }
         },
         fail: (err) => {
-            console.error('getPhone: fail', err);
-            callback(err, null); // 请求失败时调用回调函数，返回错误信息
+            console.error('setPhone: fail', err);
         }
     });
 };
