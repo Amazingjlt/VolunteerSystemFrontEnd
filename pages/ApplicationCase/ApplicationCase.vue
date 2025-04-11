@@ -3,7 +3,7 @@
 	<view class="container">
 		<!-- 绿底白字部分 -->
 		<view class="green-header">
-			<text class="header-text">XX，您的中考成绩</text>
+			<text class="header-text">您的中考成绩</text>
 			<text class="sub-text">本次模拟推荐结果仅供参考，如需要个性化填报指导，请添加志愿填报指导老师微信</text>
 		</view>
 		<view class="white-container">

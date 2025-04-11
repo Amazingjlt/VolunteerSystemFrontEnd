@@ -21,7 +21,7 @@ export const getRecommendedSchools = async (success, fail) => {
 
 export const getSchoolRecord = async (score, zone, user_id, details, success, fail) => {
     await uni.request({
-        url: 'http://43.139.109.104:8081/record/getSchool', // 替换为实际的API地址
+        url: 'https://www.fszktb.com/record/getSchool', // 替换为实际的API地址
         method: 'POST',
         header: {
             "Content-Type": "application/json"
@@ -55,7 +55,7 @@ export const getSchoolRecord = async (score, zone, user_id, details, success, fa
 export const getHistoryRecord = (user_id) => {
   return new Promise((resolve, reject) => {
     wx.request({
-      url: 'http://43.139.109.104:8081/record/getAllRecord', // 接口地址
+      url: 'https://www.fszktb.com/record/getAllRecord', // 接口地址
       method: 'POST', // 请求方法
       header: {
         'Content-Type': 'application/json' // 请求头
@@ -82,7 +82,7 @@ export const getHistoryRecord = (user_id) => {
  */
 export const getHistorySchool = async (score, zone, success, fail) => {
     await uni.request({
-        url: 'http://43.139.109.104:8081/record/getRecord', 
+        url: 'https://www.fszktb.com/record/getRecord', 
         method: 'POST',
         header: {
             "Content-Type": "application/json"
@@ -109,7 +109,7 @@ export const getHistorySchool = async (score, zone, success, fail) => {
 export const getOpenID = async (code) => {
     return new Promise((resolve, reject) => {
         uni.request({
-            url: 'http://43.139.109.104:8081/user/wx_login', // 替换为实际的请求地址
+            url: 'https://www.fszktb.com/user/wx_login', // 替换为实际的请求地址
             method: 'POST',
             header: {
                 "Content-Type": "application/json"
@@ -135,7 +135,7 @@ export const getOpenID = async (code) => {
 // 后端并不会返回手机号回来
 export const setPhone = (code,userid,callback) => {
     uni.request({
-        url: 'http://43.139.109.104:8081/user/phone', // 替换为实际的请求地址
+        url: 'https://www.fszktb.com/user/phone', // 替换为实际的请求地址
         method: 'POST',
         header: {
             "Content-Type": "application/json"

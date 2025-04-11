@@ -168,7 +168,7 @@ export default {
 	
 		// 将数据存储到本地接口
 		wx.setStorageSync('gradeData', dataToPass);
-		console.log('gradeData', dataToPass);
+		//console.log('gradeData', dataToPass);
 	       wx.navigateTo({
 	         url: '/pages/ApplicationCase/ApplicationCase',
 	         success: () => {
