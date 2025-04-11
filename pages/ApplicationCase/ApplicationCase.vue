@@ -132,28 +132,31 @@
 		<button class="submit-btn" @click="submit">专家指导</button>
 	</view>		
     <!-- 使用cover-view试图遮住canvas，但是没有用，所以这里的cover可以删掉 -->
-    <cover-view v-if="showPopup" class="popup-mask">
-        <cover-view class="popup-content">
+    <!-- 弹窗部分（已移除所有cover组件） -->
+    <view v-if="showPopup" class="popup-mask">
+        <view class="popup-content">
             <!-- 关闭按钮 -->
-            <cover-view class="close-btn" @click="closePopup">×</cover-view>
+            <view class="close-btn" @click="closePopup">×</view>
             
             <!-- 弹窗内容 -->
-            <cover-view class="popup-body">
-                <cover-view class="popup-title">温馨提示</cover-view>
-                <cover-view class="popup-text">
-                    <cover-view>除成绩外还需要参照其他因素，为了保证推荐的学校更准确，请</cover-view>
-                    <cover-view class="highlight-text">"截图二维码"</cover-view>
-                    <cover-view>添加老师微信，提供更多信息，获取免费志愿预测服务</cover-view>
-                </cover-view>
-                <cover-image 
-                    src="/static/erweima.png" 
+            <view class="popup-body">
+                <view class="popup-title">温馨提示</view>
+                <view class="popup-text">
+                    <view>除成绩外还需考虑其他因素，为了保证推荐更准确</view>
+                    <view class="highlight-text">"长按识别二维码"</view>
+                    <view>添加老师微信，获取免费志愿预测服务</view>
+                </view>
+                <!-- 图片（支持点击预览和长按菜单） -->
+                <image 
+                    src="/static/erweima2.png" 
                     class="qrcode-image"
                     mode="aspectFit"
+                    show-menu-by-longpress="true"
                 />
-                <cover-view class="tip-text">截图保存后扫码添加</cover-view>
-            </cover-view>
-        </cover-view>
-    </cover-view>
+                <view class="tip-text">长按图片可保存或识别二维码</view>
+            </view>
+        </view>
+    </view>
 </view>
 </template>
 
@@ -838,11 +841,11 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 	}
 	
 	.popup-text {
-	  font-size: 28rpx;
+	  font-size: 26rpx;
 	  color: #666;
 	  line-height: 1.6;
 	  text-align: center;
-	  margin-bottom: 40rpx;
+	  margin-bottom: 30rpx;
 	}
 	
 	.highlight-text {
