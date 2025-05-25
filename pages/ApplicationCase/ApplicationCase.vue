@@ -55,73 +55,90 @@
 		<!-- 修改后的推荐学校部分 -->
 		<view class="recommendation">
 		    <text class="recommendation-title">根据您的分数与排名推荐学校如下</text>
-		
-		    <!-- 推荐冲高校 -->
-		    <view class="recommendation-category chong">
-		        <view class="recommendation-backchong">
-		            <view class="category-header">
-		                <u-icon name="thumb-up-fill" size="40" class="icon" color="#ff8870"></u-icon>
-		                <text class="category-title">推荐冲学校</text>
-		            </view>
-		            <view class="divider"></view>
-		        </view>
-		        <view class="category-items">
-		            <view v-for="(school, index) in recommendedSchools.chong" :key="index" class="school-card chong-card">
-		                <view class="school-header">
-		                    <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
-		                    <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
+		    
+		    <!-- 检查是否有推荐学校 -->
+		    <view v-if="hasRecommendations">
+		        <!-- 推荐冲高校 -->
+		        <view class="recommendation-category chong" v-if="recommendedSchools.chong.length > 0">
+		            <view class="recommendation-backchong">
+		                <view class="category-header">
+		                    <u-icon name="thumb-up-fill" size="40" class="icon" color="#ff8870"></u-icon>
+		                    <text class="category-title">推荐冲学校</text>
 		                </view>
-		                <view class="school-info">
-		                    <text class="score">分数线：{{ school.score1 }}分</text>
-		                    <text class="detail">类别：{{ school.detail }}</text>
+		                <view class="divider"></view>
+		            </view>
+		            <view class="category-items">
+		                <view v-for="(school, index) in recommendedSchools.chong" :key="index" class="school-card chong-card">
+		                    <view class="school-header">
+		                        <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
+		                        <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
+		                    </view>
+		                    <view class="school-info">
+		                        <text class="score">分数线：{{ school.score1 }}分</text>
+		                        <text class="detail">类别：{{ school.detail }}</text>
+		                    </view>
+		                </view>
+		            </view>
+		        </view>
+		    
+		        <!-- 推荐持平校 -->
+		        <view class="recommendation-category wen" v-if="recommendedSchools.wen.length > 0">
+		            <view class="recommendation-backwen">
+		                <view class="category-header">
+		                    <u-icon name="thumb-up-fill" size="40" class="icon" color="#00c591"></u-icon>
+		                    <text class="category-title">推荐持平校</text>
+		                </view>
+		                <view class="divider"></view>
+		            </view>
+		            <view class="category-items">
+		                <view v-for="(school, index) in recommendedSchools.wen" :key="index" class="school-card wen-card">
+		                    <view class="school-header">
+		                        <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
+		                        <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
+		                    </view>
+		                    <view class="school-info">
+		                        <text class="score">分数线：{{ school.score1 }}分</text>
+		                        <text class="detail">类别：{{ school.detail }}</text>
+		                    </view>
+		                </view>
+		            </view>
+		        </view>
+		    
+		        <!-- 推荐保底校 -->
+		        <view class="recommendation-category bao" v-if="recommendedSchools.bao.length > 0">
+		            <view class="recommendation-backbao">
+		                <view class="category-header">
+		                    <u-icon name="thumb-up-fill" size="40" class="icon" color="#70d7ff"></u-icon>
+		                    <text class="category-title">推荐保底校</text>
+		                </view>
+		                <view class="divider"></view>
+		            </view>
+		            <view class="category-items">
+		                <view v-for="(school, index) in recommendedSchools.bao" :key="index" class="school-card bao-card">
+		                    <view class="school-header">
+		                        <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
+		                        <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
+		                    </view>
+		                    <view class="school-info">
+		                        <text class="score">分数线：{{ school.score1 }}分</text>
+		                        <text class="detail">类别：{{ school.detail }}</text>
+		                    </view>
 		                </view>
 		            </view>
 		        </view>
 		    </view>
-		
-		    <!-- 推荐持平校 -->
-		    <view class="recommendation-category wen">
-		        <view class="recommendation-backwen">
-		            <view class="category-header">
-		                <u-icon name="thumb-up-fill" size="40" class="icon" color="#00c591"></u-icon>
-		                <text class="category-title">推荐持平校</text>
-		            </view>
-		            <view class="divider"></view>
+		    
+		    <!-- 没有推荐学校时的提示 -->
+		    <view v-else class="no-schools-tip">
+		        <view class="tip-icon">
+		            <u-icon name="info-circle-fill" size="60" color="#ff9900"></u-icon>
 		        </view>
-		        <view class="category-items">
-		            <view v-for="(school, index) in recommendedSchools.wen" :key="index" class="school-card wen-card">
-		                <view class="school-header">
-		                    <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
-		                    <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
-		                </view>
-		                <view class="school-info">
-		                    <text class="score">分数线：{{ school.score1 }}分</text>
-		                    <text class="detail">类别：{{ school.detail }}</text>
-		                </view>
-		            </view>
+		        <view class="tip-text">
+		            <text>当前分数{{ score }}分{{ score < 300 ? '过低' : '过高' }}，暂无合适学校推荐</text>
+		            <text>建议咨询专家获取个性化指导</text>
 		        </view>
-		    </view>
-		
-		    <!-- 推荐保底校 -->
-		    <view class="recommendation-category bao">
-		        <view class="recommendation-backbao">
-		            <view class="category-header">
-		                <u-icon name="thumb-up-fill" size="40" class="icon" color="#70d7ff"></u-icon>
-		                <text class="category-title">推荐保底校</text>
-		            </view>
-		            <view class="divider"></view>
-		        </view>
-		        <view class="category-items">
-		            <view v-for="(school, index) in recommendedSchools.bao" :key="index" class="school-card bao-card">
-		                <view class="school-header">
-		                    <text class="school-name">{{ school.schoolName.split('\n')[0] }}</text>
-		                    <text class="school-code">{{ school.schoolName.split('\n')[1] }}</text>
-		                </view>
-		                <view class="school-info">
-		                    <text class="score">分数线：{{ school.score1 }}分</text>
-		                    <text class="detail">类别：{{ school.detail }}</text>
-		                </view>
-		            </view>
+		        <view class="tip-btn" @click="showPopup = true">
+		            <text>立即咨询</text>
 		        </view>
 		    </view>
 		</view>
@@ -233,6 +250,13 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 		mounted() {
 			this.fetchRecommendedSchools(); // 调用接口获取推荐学校
 			this.updateProgress(); // 更新进度条
+		},
+		computed: {
+		    hasRecommendations() {
+		        return this.recommendedSchools.chong.length > 0 || 
+		               this.recommendedSchools.wen.length > 0 || 
+		               this.recommendedSchools.bao.length > 0;
+		    }
 		},
 
 		methods: {
@@ -918,5 +942,35 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 	.detail {
 	    color: #666;
 	}
+	/* 无学校推荐时的提示样式 */
+	.no-schools-tip {
+	    background-color: #fff8e6;
+	    border-radius: 10px;
+	    padding: 20px;
+	    margin-top: 20px;
+	    text-align: center;
+	    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
 	
+	.tip-icon {
+	    margin-bottom: 15px;
+	}
+	
+	.tip-text {
+	    font-size: 16px;
+	    color: #666;
+	    line-height: 1.6;
+	    margin-bottom: 20px;
+	    display: flex;
+	    flex-direction: column;
+	}
+	
+	.tip-btn {
+	    background-color: #00c58d;
+	    color: white;
+	    padding: 10px 20px;
+	    border-radius: 20px;
+	    display: inline-block;
+	    font-size: 16px;
+	}
 </style>
