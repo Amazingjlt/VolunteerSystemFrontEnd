@@ -194,7 +194,7 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 				total: 0, //从缓存中获取的用户分数
 				details: {}, //从缓存中获取
 				score: 0, //实际显示的用户分数
-				user_id: 2, //用户id
+				user_id: 2, //用户id，会在OnLoad时被初始化by张哲
 				//place:"广东省/深圳市/宝安区",
 				maxScore: 750, // 满分
 				recommendedSchools: {
@@ -250,6 +250,7 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 		mounted() {
 			this.fetchRecommendedSchools(); // 调用接口获取推荐学校
 			this.updateProgress(); // 更新进度条
+
 		},
 		computed: {
 		    hasRecommendations() {
@@ -348,7 +349,6 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 			  try {
 			    const score = this.score;
 			    const zone = this.area;
-			    const user_id = this.user_id;
 			    const details = this.details;
 			
 			    if (Object.keys(details).length === 0) {
@@ -365,7 +365,7 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 			        (error) => { /* 错误处理 */ }
 			      );
 			    } else {
-			      getSchoolRecord(score, zone, user_id, details,
+			      getSchoolRecord(score, zone, this.user_id, details,
 			        (response) => {
 			          if (response.code === '200') {
 			            this.recommendedSchools = {
@@ -400,6 +400,9 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 					icon: 'none'
 				});
 			}
+			//从缓存拿到正确的user_id
+			this.user_id=uni.getStorageSync('user_id');
+			console.log(this.user_id);
 		}
 	};
 </script>

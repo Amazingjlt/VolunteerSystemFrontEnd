@@ -58,7 +58,7 @@
 	async function fetchUserID(code) {
 		try {
 			const userid = await getOpenID(code);
-			console.log("userID:" + userid);
+			console.log("登录成功，userID:" + userid);
 			uni.setStorageSync('user_id', userid);
 
 		} catch (error) {
@@ -74,7 +74,7 @@
 		if (typeof e == "undefined") return;
 		if (e.detail.errMsg == "getPhoneNumber:fail user deny") { //用户拒绝授权  
 			wx.showToast({
-				title: '请点击“允许”按钮授予我们相关权限',
+				title: '为了获得更好的服务质量，请点击“允许”按钮授予我们相关权限',
 				icon: 'none'
 			});
 		} else if (e.detail.errMsg == "getPhoneNumber:fail no permission") {

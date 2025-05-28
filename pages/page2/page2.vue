@@ -71,24 +71,24 @@ export default {
     };
   },
     onLoad(options) {
-		const openid = uni.getStorageSync('openid');
-		uni.request({
-			url: '/score',
-			method: 'POST',
-			data: {
-				openid
-			},
-			success: (res) => {
-				console.log('成功:', res.data);
-				const {
-					formData
-				} = res.data;
-				this.formData = formData;
-			},
-			fail: (err) => {
-				console.error('请求失败:', err);
-			}
-		});
+		// const openid = uni.getStorageSync('openid');
+		// uni.request({
+		// 	url: '/score',
+		// 	method: 'POST',
+		// 	data: {
+		// 		openid
+		// 	},
+		// 	success: (res) => {
+		// 		console.log('成功:', res.data);
+		// 		const {
+		// 			formData
+		// 		} = res.data;
+		// 		this.formData = formData;
+		// 	},
+		// 	fail: (err) => {
+		// 		console.error('请求失败:', err);
+		// 	}
+		// });
       // 接收上一页传递的参数
       if (options.area) {
         this.selectedArea = options.area;

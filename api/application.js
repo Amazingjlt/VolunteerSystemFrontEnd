@@ -20,8 +20,9 @@ export const getRecommendedSchools = async (success, fail) => {
 
 
 export const getSchoolRecord = async (score, zone, user_id, details, success, fail) => {
+	console.log(user_id);
     await uni.request({
-        url: 'https://www.fszktb.com/record/getSchool', // 替换为实际的API地址
+        url: 'https://www.fszktb.com/record/getSchool', //API地址
         method: 'POST',
         header: {
             "Content-Type": "application/json"
@@ -78,7 +79,7 @@ export const getHistoryRecord = (user_id) => {
 };
 
 /**
-点击历史查询获取推荐学校
+	通过点击历史记录来获取推荐学校
  */
 export const getHistorySchool = async (score, zone, success, fail) => {
     await uni.request({
