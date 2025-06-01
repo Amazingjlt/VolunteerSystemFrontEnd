@@ -165,7 +165,7 @@
                 </view>
                 <!-- 图片（支持点击预览和长按菜单） -->
                 <image 
-                    src="/static/erweima2.png" 
+                    src="/static/qr-code-zheng.jpg" 
                     class="qrcode-image"
                     mode="aspectFit"
                     show-menu-by-longpress="true"
