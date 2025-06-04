@@ -22,12 +22,7 @@
 				"navigationBarTitleText": "志愿预测"
 			}
 		},
-		{
-			"path": "pages/page2/page2",
-			"style": {
-				"navigationBarTitleText": "志愿预测"
-			}
-		},
+
 		{
 			"path": "pages/ApplicationCase/ApplicationCase",
 			"style": {
