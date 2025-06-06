@@ -30,11 +30,13 @@
 				</view>
 			</view>
 		</view>
-
-
+		<view class="my-record-btn" @click="navigateToMyPage">
+		  <u-icon name="clock" size="20" color="#00c58d"></u-icon>
+		  <text>我的查询记录</text>
+		</view>
 
 		<!-- 历史记录折叠列表 -->
-		<view class="history-collapse">
+		<!-- <view class="history-collapse">
 			<view class="collapse-header" @click="toggleHistory">
 				<text>查询历史记录</text>
 				<u-icon :name="showHistory ? 'arrow-up' : 'arrow-down'" size="20"
@@ -43,13 +45,11 @@
 			<view v-show="showHistory" class="history-list">
 				<view v-for="(record, index) in historyRecords" :key="index" class="history-item"
 					@click="selectHistory(record)">
-					<!-- 格式化显示时间 -->
 					<text>{{ formatTime(record.date) }} - {{ record.total }}分 ({{ record.area }})</text>
 					<u-icon name="clock" size="18" color="#999" />
 				</view>
 			</view>
-		</view>
-
+		</view> -->
 
 		<!-- 推荐学校部分 -->
 		<!-- 修改后的推荐学校部分 -->
@@ -134,7 +134,7 @@
 		            <u-icon name="info-circle-fill" size="60" color="#ff9900"></u-icon>
 		        </view>
 		        <view class="tip-text">
-		            <text>当前分数{{ score }}分{{ score < 300 ? '过低' : '过高' }}，暂无合适学校推荐</text>
+		            <text>当前分数{{ score }}分{{ score < 500 ? '过低' : '过高' }}，暂无合适学校推荐</text>
 		            <text>建议咨询专家获取个性化指导</text>
 		        </view>
 		        <view class="tip-btn" @click="showPopup = true">
@@ -261,6 +261,19 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 		},
 
 		methods: {
+			navigateToMyPage() {
+			    uni.navigateTo({
+					url: '/pages/my/my'
+			    });
+			},
+			// 新增方法：从外部接收历史记录并更新显示
+			    loadHistoryRecord(record) {
+			      this.score = record.total;
+			      this.area = record.area;
+			      this.details = {};
+			      this.fetchRecommendedSchools();
+			      this.updateProgress();
+			},
 			// 格式化时间
 			formatTime(time) {
 				if (!time) return ''; // 如果时间为空，返回空字符串
@@ -387,7 +400,7 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 		},
 		//从缓存中获取
 		onLoad() {
-			const data = wx.getStorageSync('gradeData');
+		const data = wx.getStorageSync('gradeData');
 			if (data) {
 				this.area = data.area;
 				this.total = data.total;
@@ -403,13 +416,41 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 			//从缓存拿到正确的user_id
 			this.user_id=uni.getStorageSync('user_id');
 			console.log(this.user_id);
-		}
+			
+		},
+		// 修改：接收从my页面返回的数据
+		onShow() {
+		  // 从全局数据中获取传递的记录
+		  const selectedRecord = uni.getStorageSync('selectedHistoryRecord');
+		  if (selectedRecord) {
+		    this.selectHistory(selectedRecord);
+		    // 清除存储
+		    uni.removeStorageSync('selectedHistoryRecord');
+		  }
+		},    
+
 	};
 </script>
 
 
 
 <style scoped>
+	/* 新增我的记录按钮样式 */
+	.my-record-btn {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  margin: 20px;
+	  padding: 12px 0;
+	  background-color: #f5f5f5;
+	  border-radius: 8px;
+	  color: #00c58d;
+	  font-size: 16px;
+	}
+	
+	.my-record-btn text {
+	  margin-left: 8px;
+	}
 	/* 折叠列表样式 */
 	.history-collapse {
 		margin: 20px;
