@@ -1,124 +1,3 @@
-<!-- <template>
-  <view class="container">
-    
-    <view class="form-group">
-      <text class="subtitle"><text class="highlight">学籍地</text>选择</text>
-	  <view class="container">
-	    <radio-group class="radio-group" @change="onSelectChange">
-	      <label class="radio-item">
-	        <radio value="禅城" /> 禅城区
-	      </label>
-	      <label class="radio-item">
-	        <radio value="南海" /> 南海区
-	      </label>
-	      <label class="radio-item">
-	        <radio value="顺德" /> 顺德区
-	      </label>
-	      <label class="radio-item">
-	        <radio value="三水" /> 三水区
-	      </label>
-	      <label class="radio-item">
-	        <radio value="高明" /> 高明区
-	      </label>
-	    </radio-group>
-	  </view>
-    </view>
-	  <view class="footer">
-		  <button class="next-btn" @click="goToNextPage">下一页</button>
-	  </view>
-    
-  </view>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-		selectedArea: ''  // 用于保存选中的学籍地
-    };
-  },
-  methods: {
-	// 用户选择学籍地时的回调
-    onSelectChange(e) {
-      this.selectedArea = e.detail.value;
-    },
-    // 页面跳转并传递数据
-	goToNextPage() {
-		const selectedArea = this.selectedArea;
-
-		if (!selectedArea) {
-		wx.showToast({
-			title: '请选择学籍地',
-			icon: 'none'
-		});
-		return;
-		}
-	
-		// 跳转到下一页，并传递选中的学籍地
-		wx.navigateTo({
-		url: `/pages/page2/page2?area=${selectedArea}`
-		});
-	},
-	},
-	onLoad() {
-
-	}
-};
-</script>
-
-<style scoped>
-.container {
-  position:relative;
-  height:100vh;
-  padding: 30rpx;
-  box-sizing: border-box;
-}
-
-
-
-.subtitle{
-	display:flex;
-	margin-bottom: 30rpx;
-	font-size: 45rpx;
-	font-weight: 500;
-	color:black;
-}
-
-.highlight{
-	color:#2eceb4;
-	font-weight: 600;
-	margin:0 8rpx;
-}
-
-
-.radio-group {
-  margin-bottom: 20px;
-}
-
-.radio-item {
-  display: block;
-  margin-bottom: 30rpx;
-  font-size:40rpx;
-  
-}
-
-.next-btn {
-  background-image: linear-gradient(to right, #4cd38e, #2eceb4);
-  position: absolute;
-  border-radius: 30px;
-  bottom:20px;
-  left:10px;
-  right:10px;
-  color:#ffffff;
-}
-
-.container {
-  padding: 20px;
-}
-
-
-</style> -->
-
 <template>
   <view class="container">
     <!-- Area Selection from page1.vue -->
@@ -147,7 +26,7 @@ export default {
 
     <!-- Score Input from page2.vue -->
     <view class="score-section">
-      <view class="subtitle">2.&nbsp;请填写<text class="highlight">二模考试</text>实际得分</view>
+      <view class="subtitle">2.&nbsp;请填写<text class="highlight">{{ scoreTypeText }}</text></view>
       <form class="score">
         <view class="input-group">
           <text>语文：</text>
@@ -219,6 +98,21 @@ export default {
       }
     };
   },
+    computed: {
+      scoreTypeText() {
+        const currentDate = new Date();
+        const startDate = new Date('2025-07-02');
+        const endDate = new Date('2025-07-17');
+  
+        if (currentDate < startDate) {
+          return '二模分数';
+        } else if (currentDate >= startDate && currentDate <= endDate) {
+          return '预估中考分数';
+        } else {
+          return '中考分数';
+        }
+      }
+    },
   methods: {
     // 用户选择学籍地时的回调
     onSelectChange(e) {
@@ -297,14 +191,20 @@ export default {
       }
 
       this.isSubmitting = true;
-
+	  // 计算总分
+	  let total = this.calculateTotal();
+	  // 如果是二模分数，总分加30
+	  if (this.scoreTypeText === '二模分数') {
+	  total += 30;
+	  }
       // 准备传递的数据
       const dataToPass = {
         area: this.selectedArea,
-        total: this.calculateTotal(),
+        total: total,
         details: this.formData
       };
-
+	
+	 console.log(dataToPass);
       // 存储数据到本地
       wx.setStorageSync('gradeData', dataToPass);
 
@@ -327,7 +227,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .container {
   padding: 30rpx;
