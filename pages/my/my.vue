@@ -90,8 +90,15 @@ export default {
       // 存储选中的记录
       uni.setStorageSync('selectedHistoryRecord', record);
       // 返回上一页
-      uni.switchTab({
-        url: '/pages/ApplicationCase/ApplicationCase'
+      uni.navigateTo({
+        url: `/pages/ApplicationCase/ApplicationCase?area=${encodeURIComponent(record.area)}&total=${record.total}&date=${encodeURIComponent(record.date)}`,
+        success: () => {
+          console.log('跳转到详情页成功');
+        },
+        fail: (err) => {
+          console.error('跳转失败:', err);
+          uni.showToast({ title: '跳转失败', icon: 'none' });
+        }
       });
     }
   }

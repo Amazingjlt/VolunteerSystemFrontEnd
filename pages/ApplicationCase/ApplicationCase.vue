@@ -398,37 +398,66 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 			
 			
 		},
-		//从缓存中获取
-		onLoad() {
-		const data = wx.getStorageSync('gradeData');
-			if (data) {
-				this.area = data.area;
-				this.total = data.total;
-				this.details = data.details;
-				this.score = data.total;
-				console.log('接收到的数据:', data);
-			} else {
-				wx.showToast({
-					title: '未接收到数据',
-					icon: 'none'
-				});
-			}
-			//从缓存拿到正确的user_id
-			this.user_id=uni.getStorageSync('user_id');
-			console.log(this.user_id);
+		// //从缓存中获取
+		// onLoad() {
+		// const data = wx.getStorageSync('gradeData');
+		// 	if (data) {
+		// 		this.area = data.area;
+		// 		this.total = data.total;
+		// 		this.details = data.details;
+		// 		this.score = data.total;
+		// 		console.log('接收到的数据:', data);
+		// 	} else {
+		// 		wx.showToast({
+		// 			title: '未接收到数据',
+		// 			icon: 'none'
+		// 		});
+		// 	}
+		// 	//从缓存拿到正确的user_id
+		// 	this.user_id=uni.getStorageSync('user_id');
+		// 	console.log(this.user_id);
 			
-		},
-		// 修改：接收从my页面返回的数据
-		onShow() {
-		  // 从全局数据中获取传递的记录
-		  const selectedRecord = uni.getStorageSync('selectedHistoryRecord');
-		  if (selectedRecord) {
-		    this.selectHistory(selectedRecord);
-		    // 清除存储
-		    uni.removeStorageSync('selectedHistoryRecord');
-		  }
-		},    
-
+		// },
+		// // 修改：接收从my页面返回的数据
+		// onShow() {
+		//   // 从全局数据中获取传递的记录
+		//   const selectedRecord = uni.getStorageSync('selectedHistoryRecord');
+		//   if (selectedRecord) {
+		//     this.selectHistory(selectedRecord);
+		//     // 清除存储
+		//     uni.removeStorageSync('selectedHistoryRecord');
+		//   }
+		// },    
+				onLoad(options) {
+					// 优先使用URL参数中的历史记录数据
+					if (options.area && options.total) {
+						this.area = decodeURIComponent(options.area);
+						this.total = options.total;
+						this.score = options.total;
+						console.log('接收到历史记录数据:', options);
+					} 
+					// 否则尝试从本地缓存获取数据
+					else {
+						const data = wx.getStorageSync('gradeData');
+						if (data) {
+							this.area = data.area;
+							this.total = data.total;
+							this.details = data.details;
+							this.score = data.total;
+							console.log('接收到本地数据:', data);
+						} else {
+							wx.showToast({
+								title: '未接收到数据',
+								icon: 'none'
+							});
+						}
+					}
+					
+					// 从缓存获取user_id
+					this.user_id = uni.getStorageSync('user_id');
+					console.log(this.user_id);
+				},
+				// 移除不再需要的onShow逻辑
 	};
 </script>
 

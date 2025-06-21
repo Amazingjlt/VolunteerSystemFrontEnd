@@ -208,15 +208,12 @@ export default {
       // 存储数据到本地
       wx.setStorageSync('gradeData', dataToPass);
 
-     // 跳转到展示页面（现在是tabBar页面）
-     uni.switchTab({
+     // 修改跳转方式
+     uni.navigateTo({
        url: '/pages/ApplicationCase/ApplicationCase',
        success: () => {
          uni.showToast({ title: '提交成功' });
          this.isSubmitting = false;
-         
-         // 如果需要传递参数到tabBar页面
-         // uni.setStorageSync('tabBarParams', { yourData: this.someData });
        },
        fail: () => {
          uni.showToast({ title: '跳转失败', icon: 'none' });
