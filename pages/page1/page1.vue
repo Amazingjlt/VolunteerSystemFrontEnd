@@ -46,7 +46,7 @@
         </view>
         <view class="input-group">
           <text>化学：</text>
-          <input v-model="formData.chemistry" type="number" placeholder="满分[120]分" min="0" max="120" @blur="validateField('chemistry', 100)" />
+          <input v-model="formData.chemistry" type="number" placeholder="满分[100]分" min="0" max="100" @blur="validateField('chemistry', 100)" />
         </view>
         <view class="input-group">
           <text>历史：</text>
