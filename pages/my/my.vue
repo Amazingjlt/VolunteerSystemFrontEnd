@@ -90,7 +90,9 @@ export default {
       // 存储选中的记录
       uni.setStorageSync('selectedHistoryRecord', record);
       // 返回上一页
-      uni.navigateBack();
+      uni.switchTab({
+        url: '/pages/ApplicationCase/ApplicationCase'
+      });
     }
   }
 };

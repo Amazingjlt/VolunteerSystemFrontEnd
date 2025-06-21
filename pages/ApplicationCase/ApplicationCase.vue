@@ -262,9 +262,9 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 
 		methods: {
 			navigateToMyPage() {
-			    uni.navigateTo({
-					url: '/pages/my/my'
-			    });
+			    uni.switchTab({
+				  url: '/pages/my/my'
+				});
 			},
 			// 新增方法：从外部接收历史记录并更新显示
 			    loadHistoryRecord(record) {
