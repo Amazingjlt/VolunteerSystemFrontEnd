@@ -2,6 +2,10 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			uni.showShareMenu({
+				withShareTicket: true,
+				menus: ['shareAppMessage', 'shareTimeline']//开启转发好友和转发朋友圈按钮
+			})
 		},
 		onShow: function() {
 			console.log('App Show')

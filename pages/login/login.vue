@@ -1,4 +1,8 @@
 <template>
+	
+	<!-- 已经被废弃了，别管 -->
+	
+	
   <view class="container">
     <!-- 欢迎文字 -->
     <text class="welcome-text">欢迎使用佛山中考志愿填报推荐</text>

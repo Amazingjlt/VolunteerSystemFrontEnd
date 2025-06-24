@@ -252,6 +252,12 @@ import { getSchoolRecord} from '@/api/application.js'; // 引入 getSchoolRecord
 			this.updateProgress(); // 更新进度条
 
 		},
+		onShareAppMessage(res) {
+			return {
+				title: '佛山中考志愿填报推荐，智能推荐学校',
+				path: '/pages/oneLogin/oneLogin'
+			}
+		},
 		computed: {
 		    hasRecommendations() {
 		        return this.recommendedSchools.chong.length > 0 || 
